@@ -13,9 +13,14 @@
 <p>Meters: <span id="output"></span></p>
 
 <script>
-function DateConverter(valNum) {
-  
-  document.getElementById("output").innerHTML=valNum/3.2808;
+function DateConverter(code) {
+  if(code.length == 6 and isLetter(charAt(0)) and isLetter(charAt(3))) //FDS code K215J29
+  {
+      document.getElementById("output").innerHTML=code;
+  }
+}
+function isLetter(str) {
+  return str.length === 1 && str.match(/[a-z|A-Z]/i);
 }
 </script>
 </body>
