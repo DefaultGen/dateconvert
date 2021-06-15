@@ -10,18 +10,69 @@
   <label>Code</label>
   <input id="inputCode" type="string" placeholder="K135J11" oninput="DateConverter(this.value)" onchange="DateConverter(this.value)">
 </p>
-<p>Meters: <span id="output"></span></p>
+<p><span id="output"></span></p>
 
 <script>
 function DateConverter(code) {
-  if(code.length == 6 and isLetter(charAt(0)) and isLetter(charAt(3))) //FDS code K215J29
+
+  //FDS code K215J29
+  //MDDY???
+  if(code.length == 7 && isLetter(code.charAt(0)) && isNum(code.charAt(1)) &&isNum(code.charAt(2)) && isNum(code.charAt(3)) && isLetter(code.charAt(4)) && isNum(code.charAt(5)) && isNum(code.charAt(6)))
   {
-      document.getElementById("output").innerHTML=code;
+    var month = azMonth(code.charAt(0));
+	var day = code.substring(1,2);
+	var year = nesYear(code.charAt(3));
+	var unknown = code.substring(4,7);
+    document.getElementById("output").innerHTML=`
+		<b>Famicom Disk System disk code.</b>
+		<p>
+		`
+		+"Date: "+month+" "+day+", "+year+
+		`
+		</p>
+		<p>`+"Unknown code: "+unknown+`</p>
+		<p>Format: MDDY???</p>
+		<p>The presumed year range is 1985-1994 for FDS games.</p>
+	`
+  }
+  else
+  {
+	document.getElementById("output").innerHTML=code;
   }
 }
 function isLetter(str) {
   return str.length === 1 && str.match(/[a-z|A-Z]/i);
 }
+
+function isNum(num){
+  return !isNaN(num)
+}
+
+function azMonth(str) {
+  if(str == "A") return "January"
+  if(str == "B") return "February"
+  if(str == "C") return "March"
+  if(str == "D") return "April"
+  if(str == "E") return "May"
+  if(str == "F") return "June"
+  if(str == "G") return "July"
+  if(str == "H") return "August"
+  if(str == "I") return "September"
+  if(str == "J") return "October"
+  if(str == "K") return "November"
+  if(str == "L") return "December"
+}
+
+//For NES/FC, assume 1985-1994
+function nesYear(digitYear) {
+  if (digitYear < 5) {
+  	  return 1990+parseInt(digitYear);
+  }
+  if (digitYear >=5) {
+	  return 1980+parseInt(digitYear);
+  }
+}
+
 </script>
 </body>
 </html>
