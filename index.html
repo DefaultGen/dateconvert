@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-<title>Feet to Meters Length Converter</title>
+<title>Date Code Converter</title>
 <body>
 
-<h2>Length Converter</h2>
-<p>Type a value in the Feet field to convert the value to Meters:</p>
+<h2>FDS Date Code Converter</h2>
+<p>Type a code (e.g. K135J11):</p>
 
 <p>
-  <label>Feet</label>
-  <input id="inputFeet" type="number" placeholder="Feet" oninput="LengthConverter(this.value)" onchange="LengthConverter(this.value)">
+  <label>Code</label>
+  <input id="inputCode" type="string" placeholder="K135J11" oninput="DateConverter(this.value)" onchange="DateConverter(this.value)">
 </p>
-<p>Meters: <span id="outputMeters"></span></p>
+<p>Meters: <span id="output"></span></p>
 
 <script>
-function LengthConverter(valNum) {
-  document.getElementById("outputMeters").innerHTML=valNum/3.2808;
+function DateConverter(valNum) {
+  
+  document.getElementById("output").innerHTML=valNum/3.2808;
 }
 </script>
 </body>
