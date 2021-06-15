@@ -20,7 +20,7 @@ function DateConverter(code) {
   if(code.length == 7 && isLetter(code.charAt(0)) && isNum(code.charAt(1)) &&isNum(code.charAt(2)) && isNum(code.charAt(3)) && isLetter(code.charAt(4)) && isNum(code.charAt(5)) && isNum(code.charAt(6)))
   {
     var month = azMonth(code.charAt(0));
-	var day = code.substring(1,2);
+	var day = code.substring(1,3);
 	var year = nesYear(code.charAt(3));
 	var unknown = code.substring(4,7);
     document.getElementById("output").innerHTML=`
