@@ -32,6 +32,14 @@ h2 {
   width: 50%;
 }
 
+.example {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 70%;
+  margin-bottom:20px;
+}
+
 .list-table{
 	  border-collapse: collapse;
 	  border: 1px solid black;
@@ -109,6 +117,11 @@ p {
   letter-spacing: .03em;
 }
 
+span{
+  padding:0px;
+  margin:0px;
+}
+
 .disclaimer {
 float:left;
 }
@@ -117,6 +130,10 @@ float:left;
 overflow:hidden;
 padding-left:5px;
 margin-bottom:20px;
+}
+
+.logo {
+  margin-top:20px;
 }
 
 .mono {
@@ -179,9 +196,10 @@ color:#06d6a0;
   text-underline-offset: 2px;
 }
 
-#hidden {
+.fancybox {
 box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 padding:5px 20px 5px 30px;
+margin-bottom:20px;
 }
 
 
@@ -191,7 +209,7 @@ padding:5px 20px 5px 30px;
 }
 
 .table {
-  margin: 0 0 40px 0;
+  margin: 0 auto 40px auto;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
 }
@@ -285,12 +303,10 @@ function DateConverter(code) {
 	var year = nesYear(code.charAt(3));
 	var unknown = code.substring(4,7);
     document.getElementById("output").innerHTML=`
-		<img class="center" src="./logos/fdslogo.png">
+	<div class="fancybox">
+		<img class="center logo" src="./logos/fdslogo.png">
 		<h2>Famicom Disk System disk code:
-			<span class="red mono">`+code.charAt(0)+`</span>
-			<span class="yellow mono">`+code.substring(1,3)+`</span>
-			<span class="green mono">`+code.charAt(3)+`</span>
-			<span class="blue mono">`+code.substring(4,7)+`</span>
+			<span class="red mono">`+code.charAt(0)+`</span><span class="yellow mono">`+code.substring(1,3)+`</span><span class="green mono">`+code.charAt(3)+`</span><span class="blue mono">`+code.substring(4,7)+`</span>
 		</h2>
 		
 		
@@ -303,7 +319,7 @@ function DateConverter(code) {
 		</thead>
 		<tbody>
 			<tr>
-				<td>`+"First date"+`</td>
+				<td>`+"Date"+`</td>
 				<td>
 					<span class="redul">`+month+`</span>`+" "+`
 					<span class="yellowul">`+day+`</span>`+", "+`
@@ -321,26 +337,27 @@ function DateConverter(code) {
 			<tr>
 				<td>`+"Format"+`</td>
 				<td>
-					<span class="redul">M</span>
-					<span class="yellowul">DD</span>
-					<span class="greenul">Y</span>
-					<span class="blueul">???</span>
+					<span class="redul">M</span><span class="yellowul">DD</span><span class="greenul">Y</span><span class="blueul">???</span>
 					<span> (Possibly MDDYMDD)</span>
 				</td>				
 			</tr>
 		</tbody>
 	</table>
-	<p>The presumed year range is 1985-1994 for FDS games.</p>
-	<p>The characters A-L are presumed to be the months January through December.</p>
-	<div>
-	<div class="disclaimer">
-		Useful Links/Sources:
 	</div>
+	<div class="fancybox">
+	<h2>Further info</h2>
+		<p>The date seems to be either the date the disk was manufactured or the date the disk was written. Checking a few disks, the actual write date of the data on the disk is usually only a few days after the stamped date code. The final 3 characters are currently of unknown significance.</p>
+		<p>The presumed year range is 1985-1994 for FDS games.</p>
+		<p>The characters A-L are presumed to be the months January through December.</p>
+		<div class="disclaimer"><b>Useful Links/Sources:</b></div>
 		<div class="disclaimertext">
-		<a href="https://www.videogamesage.com/forums/topic/8049-can-anyone-shed-light-on-famicom-disk-serial-numbers/">VGS discussion of FDS date codes</a><br />
-		<a href="https://forums.nesdev.com/viewtopic.php?f=2&t=22137&sid=c95037074b68511be9512d587a66bbbe">NESDev discussion of FDS date headers</a>
+			<a href="https://www.videogamesage.com/forums/topic/8049-can-anyone-shed-light-on-famicom-disk-serial-numbers/">VGS discussion of FDS date codes</a><br />
+			<a href="https://forums.nesdev.com/viewtopic.php?f=2&t=22137&sid=c95037074b68511be9512d587a66bbbe">NESDev discussion of FDS date headers</a><br />
+			<a href="https://pony.velvet.jp/fcdisk/fdsstdylst_e.html">FDS release dates (and disk writer release dates)</a>
 		</div>
-	<div>
+		<p><b>Example:</b></p>
+		<img class="example" src="./examples/fds.png">
+	</div>
 	`
   }
   else if(code.length==0)
@@ -387,7 +404,8 @@ function nesYear(digitYear) {
 
 </script>
 
-<div id="hidden">
+<div class="fancybox">
+<h2>Instructions</h2>
 <p>Enter a video game date code from an IC, box, insert, or disk (e.g. K135J11) and this tool will attempt to decode it.</p>
 <p>Supported platforms include:</p>
 
