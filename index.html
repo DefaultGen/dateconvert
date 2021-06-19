@@ -294,8 +294,10 @@ margin-bottom:20px;
 <script>
 function DateConverter(code) {
 
+  ///// FAMICOM DISK SYSTEM /////
   //FDS code K215J29
   //MDDY???
+  
   if(code.length == 7 && isLetter(code.charAt(0)) && isNum(code.charAt(1)) &&isNum(code.charAt(2)) && isNum(code.charAt(3)) && isLetter(code.charAt(4)) && isNum(code.charAt(5)) && isNum(code.charAt(6)))
   {
     var month = azMonth(code.charAt(0));
@@ -360,9 +362,147 @@ function DateConverter(code) {
 	</div>
 	`
   }
+  
+  
+  ///// NES 5 DIGIT NUMERIC  /////
+  //NES code 91219
+  //YMMWW
+  
+  
+  else if(code.length == 5 && isNum(code.substring(0,5)) && code.substring(1,3) <= 12 && code.substring(3,5) <= 52)
+  {
+
+    var year = nesBoxManYear(code.charAt(0));
+	var month = monthNumToText(code.substring(1,3));
+	var day = code.substring(3,5);
+
+    document.getElementById("output").innerHTML=`
+	<div class="fancybox">
+		<img class="center logo" src="./logos/nes.png">
+		<h2>NES 5 digit code:
+			<span class="red mono">`+code.charAt(0)+`</span><span class="yellow mono">`+code.substring(1,3)+`</span><span class="green mono">`+code.substring(3,5)+`</span>
+		</h2>
+		<table class="styled-table">
+		<thead>
+		<tr>
+			<th></th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>`+"Date"+`</td>
+				<td>
+					<span class="yellowul">`+month+`</span>`+" "+`
+					<span class="greenul">`+day+`</span>`+", "+`
+					<span class="redul">`+year+`</span>
+				</td>
+			</tr>
+			<tr>
+				<td>`+"Format"+`</td>
+				<td>
+					<span class="redul">Y</span><span class="yellowul">MM</span><span class="greenul">DD</span>
+				</td>				
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<div class="fancybox">
+	<h2>Further info</h2>
+		<p>The right flap of the box and the last page of the manual may have a date code. Not all games have them.</p>
+		<p>The box date and manual date do not exactly match. A general guideline is to have dates that are "pretty close". It is unlikely there will ever be an accurate database of all possible correct combinations.</p>
+		<p>The presumed year range is 1988-1997 for NES games. Date codes started appearing in mid-late 1988. An early date code is Xevious with a box code of 81003. One of the latest ones is Die Schlumpfe NES-SF-NOE-1 with a box code of 60401.</p>
+		<p>The Zoda's Revenge box date code 40111 is printed backwards</p>
+		<div class="disclaimer"><b>Useful Links/Sources:</b></div>
+		<div class="disclaimertext">
+			<a href="https://www.videogamesage.com/forums/topic/6651-please-post-all-your-nes-date-codes/">VGS NES date code thread</a>
+		</div>
+		<p><b>Box flap example:</b></p>
+		<img class="example" src="./examples/nesboxdate.jpg">
+		<p><b>Last page of manual example:</b></p>
+		<img class="example" src="./examples/nesmandate.jpg">
+	</div>
+	`
+
+  }
+  
+  
+  // THIS IS SOME MESSED UP STUFF BECAUSE I WAS THINKING IN WEEKS
+  /// YOU GOTTA DO THIS TOO https://www.videogamesage.com/forums/topic/6855-nintendo-disc-date-codes/
+  
+  else if(code.length == -4 && isNum(code.substring(0,5)) && code.substring(1,3) <= 12 && code.substring(3,5) <= 52)
+  {
+
+    var year = nesBoxManYear(code.charAt(0));
+	var month = code.substring(1,3);
+	var week = code.substring(3,5);
+	var lowDate = getDateByWeek(week, year);
+	var datestring = (lowDate.getMonth()+1) + "/" + lowDate.getDate() + "/" + lowDate.getFullYear();
+
+    document.getElementById("output").innerHTML=`
+	<div class="fancybox">
+		<img class="center logo" src="./logos/fdslogo.png">
+		<h2>MESSED UP WEEK STUFF:
+			<span class="red mono">`+code.charAt(0)+`</span><span class="yellow mono">`+code.substring(1,3)+`</span><span class="green mono">`+code.substring(3,5)+`</span>
+		</h2>
+		<table class="styled-table">
+		<thead>
+		<tr>
+			<th></th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>`+"Year"+`</td>
+				<td>
+					<span class="redul">`+year+`</span>`+" "+`
+				</td>
+			</tr>
+			<tr>
+				<td>`+"Month"+`</td>
+				<td><span class="yellowul">`+month+`</span></td>
+			</tr>
+			<tr>
+				<td>`+"Week of Year"+`</td>
+				<td><span class="greenul">`+week+`</span></td>
+			</tr>
+			<tr>
+				<td>`+"Date Range"+`</td>
+				<td>`+datestring+`</td>
+			</tr>
+			<tr>
+				<td>`+"Format"+`</td>
+				<td>
+					<span class="redul">Y</span><span class="yellowul">MM</span><span class="greenul">WW</span>
+				</td>				
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<div class="fancybox">
+	<h2>Further info</h2>
+		<p>The date seems to be either the date the disk was manufactured or the date the disk was written. Checking a few disks, the actual write date of the data on the disk is usually only a few days after the stamped date code. The final 3 characters are currently of unknown significance.</p>
+		<p>The presumed year range is 1985-1994 for FDS games.</p>
+		<p>The characters A-L are presumed to be the months January through December.</p>
+		<div class="disclaimer"><b>Useful Links/Sources:</b></div>
+		<div class="disclaimertext">
+			<a href="https://www.videogamesage.com/forums/topic/8049-can-anyone-shed-light-on-famicom-disk-serial-numbers/">VGS discussion of FDS date codes</a><br />
+			<a href="https://forums.nesdev.com/viewtopic.php?f=2&t=22137&sid=c95037074b68511be9512d587a66bbbe">NESDev discussion of FDS date headers</a><br />
+			<a href="https://pony.velvet.jp/fcdisk/fdsstdylst_e.html">FDS release dates (and disk writer release dates)</a>
+		</div>
+		<p><b>Example:</b></p>
+		<img class="example" src="./examples/fds.png">
+	</div>
+	`
+
+  }
+  
+  
+  
   else if(code.length==0)
   {
-	document.getElementById("output").innerHTML=code+"";
+	document.getElementById("output").innerHTML="";
   }
   else
   {
@@ -374,7 +514,7 @@ function isLetter(str) {
 }
 
 function isNum(num){
-  return !isNaN(num)
+  return !isNaN(num);
 }
 
 function azMonth(str) {
@@ -392,7 +532,12 @@ function azMonth(str) {
   if(str == "L") return "December"
 }
 
-//For NES/FC, assume 1985-1994
+function monthNumToText(mon) {
+  var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+  return monthNames[mon-1];
+}
+
+//For FC assume 1985-1994
 function nesYear(digitYear) {
   if (digitYear < 5) {
   	  return 1990+parseInt(digitYear);
@@ -401,6 +546,30 @@ function nesYear(digitYear) {
 	  return 1980+parseInt(digitYear);
   }
 }
+
+//For NES assume 1988-1997. The last box flap date code is 1996 AFAIK and the codes start late 1988.
+function nesBoxManYear(digitYear) {
+  if (digitYear < 8) {
+  	  return 1990+parseInt(digitYear);
+  }
+  if (digitYear >=8) {
+	  return 1980+parseInt(digitYear);
+  }
+}
+
+
+function getDateByWeek( weeks, year ) {
+   var d = new Date(year, 0, 1);
+   var dayNum = d.getDay();
+   var requiredDate = --weeks * 7;
+   // If 1 Jan is Friday to Sunday, go to next week 
+   if (((dayNum!=0) || dayNum > 4)) {
+       requiredDate += 7;
+    }
+  // Add required number of days
+   d.setDate(1 - d.getDay() + ++requiredDate );
+   return d;
+ }
 
 </script>
 
@@ -422,6 +591,12 @@ function nesYear(digitYear) {
       <div class="cell" data-title="Name">Famicom Disk System</div>
 	  <div class="cell" data-title="Code">Disk Code</div>
       <div class="cell" data-title="Example">K135J11</div>
+    </div>
+	
+	<div class="row">
+      <div class="cell" data-title="Name">NES</div>
+	  <div class="cell" data-title="Code">Box Flap/Manual Code</div>
+      <div class="cell" data-title="Example">91219</div>
     </div>
     
   </div>
