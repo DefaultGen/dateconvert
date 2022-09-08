@@ -30,7 +30,7 @@ function DateConverter(code) {
         //YMW
 		//Range 1985-1994
 		
-		if(isNum(code.substring(0,1)) && isNum(code.substring(2,3)) && parseInt(code.substring(2,3)) <=5 && !isNum(code.substring(1,2)))
+	if(isNum(code.substring(0,1)) && isNum(code.substring(2,3)) && parseInt(code.substring(2,3)) <=5)
         {
             var year = 1980+parseInt(code.substring(0,1));
 			if(year < 1985) year += 10
