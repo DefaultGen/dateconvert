@@ -23,7 +23,81 @@ function DateConverter(code) {
 	
     code = code.toUpperCase();
 
-    if(code.length == 4)
+	if(code.length == 3)
+	{
+		///// IC 3 character  /////
+        //NES IC example: 7E2
+        //YMW
+		//Range 1985-1994
+		
+		if(isNum(code.substring(0,1)) && isNum(code.substring(2,3)) && parseInt(code.substring(2,3)) <=5 && !isNum(code.substring(1,2)))
+        {
+            var year = 1980+parseInt(code.substring(0,1));
+			if(year < 1985) year += 10
+			
+            var week = parseInt(code.substring(2,3));
+			var month = azMonth(code.substring(1,2));
+			
+            var datestring  = "The " + week + " week of " + month + " " + year; 
+
+            document.getElementById("output").innerHTML=`
+            <div class="fancybox">
+                <img class="center logo" src="./logos/4digitic.png">
+                <h2>3-digit IC Date Code:
+                    <span class="red mono">`+code.substring(0,1)+`</span><span class="yellow mono">`+code.substring(1,2)+`</span><span class="green mono">`+code.substring(2,3)+`</span>
+                </h2>
+                <table class="styled-table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>`+"Year"+`</td>
+                        <td>
+                            <span class="redul">`+year+`</span>`+" "+`
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>`+"Week"+`</td>
+                        <td><span class="yellowul">`+week+`</span></td>
+                    </tr>
+                    <tr>
+                        <td>`+"Date Range"+`</td>
+                        <td>`+datestring+`</td>
+                    </tr>
+                    <tr>
+                        <td>`+"Format"+`</td>
+                        <td>
+                            <span class="redul">Y</span><span class="yellowul">M</span><span class="greenul">W</span>
+                        </td>               
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="fancybox">
+            <h2>Further info</h2>
+                <p>Common on NES ROM ICs. The PRG and CHR ROMs usually have different but close dates. The NES10 IC usually has a much earlier date.</p>
+                <p>These dates are calculated as ISO dates, meaning a date always starts on a Monday. Week 01 is the first week that has a Thursday (i.e. at least 4 days). This means week 01 can extend back into December of the previous year. For example 9301 actually starts 12/28/1992. This is not a bug. Dates are weird.</p>
+                <div class="disclaimer"><b>Useful Links/Sources:</b></div>
+                <div class="disclaimertext">
+                    <a href="https://telcontar.net/KBK/tech/IC_dates">https://telcontar.net/KBK/tech/IC_dates</a><br />
+                    <a href="https://en.wikipedia.org/wiki/ISO_week_date">ISO date/week info</a>
+                </div>
+                <p><b>Example:</b></p>
+                <img class="example" src="./examples/nespcb.png">
+            </div>
+            `
+        }
+		
+		
+		
+		
+	}
+	
+    else if(code.length == 4)
     {
 
         ///// 4 DIGIT IC YYWW /////
@@ -159,7 +233,6 @@ function DateConverter(code) {
 
     else if(code.length == 7)
     {
-
         ///// FAMICOM DISK SYSTEM /////
         //FDS code K215J29
         //MDDY???
