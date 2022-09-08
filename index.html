@@ -38,7 +38,7 @@ function DateConverter(code) {
             var week = parseInt(code.substring(2,3));
 			var month = azMonth(code.substring(1,2));
 			
-            var datestring  = "The " + week + " week of " + month + " " + year; 
+            var datestring  = "Week " + week + " of " + month + " " + year; 
 
             document.getElementById("output").innerHTML=`
             <div class="fancybox">
@@ -61,8 +61,12 @@ function DateConverter(code) {
                         </td>
                     </tr>
                     <tr>
+                        <td>`+"Month"+`</td>
+                        <td><span class="yellowul">`+month+`</span></td>
+                    </tr>
+                    <tr>
                         <td>`+"Week"+`</td>
-                        <td><span class="yellowul">`+week+`</span></td>
+                        <td><span class="greenul">`+week+`</span></td>
                     </tr>
                     <tr>
                         <td>`+"Date Range"+`</td>
@@ -79,7 +83,7 @@ function DateConverter(code) {
             </div>
             <div class="fancybox">
             <h2>Further info</h2>
-                <p>Common on NES ROM ICs. The PRG and CHR ROMs usually have different but close dates. The NES10 IC usually has a much earlier date.</p>
+                <p>PLACEHOLDER TEXT Common on NES ROM ICs. The PRG and CHR ROMs usually have different but close dates. The NES10 IC usually has a much earlier date.</p>
                 <p>These dates are calculated as ISO dates, meaning a date always starts on a Monday. Week 01 is the first week that has a Thursday (i.e. at least 4 days). This means week 01 can extend back into December of the previous year. For example 9301 actually starts 12/28/1992. This is not a bug. Dates are weird.</p>
                 <div class="disclaimer"><b>Useful Links/Sources:</b></div>
                 <div class="disclaimertext">
